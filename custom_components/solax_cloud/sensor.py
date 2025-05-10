@@ -18,14 +18,11 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 API_URL = "https://global.solaxcloud.com/api/v2/dataAccess/realtimeInfo/get"
 
-async def async_setup_platform(hass: HomeAssistantType, config: ConfigType, async_add_entities, discovery_info=None):
-    """Set up the SolaX Cloud sensor platform."""
-    token = hass.data.get("solax_cloud_token")
-    wifi_sn = hass.data.get("solax_cloud_sn")
-
-    if not token or not wifi_sn:
-        _LOGGER.error("Missing token or WiFi SN for SolaX Cloud integration.")
-        return
+async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+    """YAML-based sensor setup."""
+    from . import DOMAIN
+    token = hass.data[DOMAIN]["token"]
+    wifi_sn = hass.data[DOMAIN]["wifi_sn"]
 
     coordinator = SolaxDataUpdateCoordinator(hass, token, wifi_sn)
     await coordinator.async_config_entry_first_refresh()
