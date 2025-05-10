@@ -1,10 +1,10 @@
-# Inhalt der Datei manifest.json:
-# {
-#   "domain": "solax_cloud",
-#   "name": "SolaX Cloud Integration",
-#   "version": "0.1.0",
-#   "documentation": "https://github.com/deinname/HA_MySolax",
-#   "requirements": ["aiohttp"],
-#   "codeowners": ["@dein-githubname"],
-#   "iot_class": "cloud_polling"
-# }
+
+{
+   "domain": "solax_cloud",
+   "name": "SolaX Cloud Integration",
+   "version": "0.1.0",
+   "documentation": "https://github.com/deinname/HA_MySolax",
+   "requirements": ["aiohttp"],
+   "codeowners": ["@dein-githubname"],
+   "iot_class": "cloud_polling"
+ }
