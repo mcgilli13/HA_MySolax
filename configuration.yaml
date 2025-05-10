@@ -6,6 +6,13 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
+solax_cloud:
+  token: !secret solax_token
+  wifi_sn: !secret solax_sn
+
+sensor:
+  - platform: solax_cloud
+
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
