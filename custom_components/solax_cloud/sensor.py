@@ -22,13 +22,27 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     coordinator = SolaxDataUpdateCoordinator(hass, token, wifi_sn)
     await coordinator.async_refresh()
 
-    sensors = [
-        SolaxSensor(coordinator, "acpower", "AC Power", "W"),
-        SolaxSensor(coordinator, "yieldtoday", "Yield Today", "kWh"),
-        SolaxSensor(coordinator, "soc", "Battery SoC", "%"),
-        SolaxStatusSensor(coordinator),
-        SolaxTimestampSensor(coordinator)
-    ]
+    sensors = []
+    for key, name, unit in [
+        ("acpower", "AC Power", "W"),
+        ("yieldtoday", "Yield Today", "kWh"),
+        ("yieldtotal", "Yield Total", "kWh"),
+        ("soc", "Battery SoC", "%"),
+        ("batPower", "Battery Power", "W"),
+        ("feedinpower", "Feed-in Power", "W"),
+        ("feedinenergy", "Feed-in Energy", "kWh"),
+        ("consumeenergy", "Consume Energy", "kWh"),
+        ("powerdc1", "PV String 1", "W"),
+        ("powerdc2", "PV String 2", "W"),
+        ("powerdc3", "PV String 3", "W"),
+        ("batStatus", "Battery Status", None),
+        ("inverterStatus", "Inverter Status", None),
+        ("uploadTime", "Upload Time", None)
+    ]:
+        sensors.append(SolaxSensor(coordinator, key, name, unit))
+
+    sensors.append(SolaxStatusSensor(coordinator))
+    sensors.append(SolaxTimestampSensor(coordinator))
 
     if async_add_entities:
         async_add_entities(sensors, update_before_add=True)
